@@ -8,8 +8,6 @@ export type TranslationKey = TranslationKeyType
 
 assertMainOrNodeBoot()
 
-export type Language = {code: string, textId: TranslationKey}
-
 export type DateTimeFormatOptions = {
 	hourCycle?: string
 }
@@ -81,6 +79,8 @@ const translationImportMap = {
 	// $FlowFixMe[untyped-import]
 	'en': () => import("../translations/en.js"),
 	// $FlowFixMe[untyped-import]
+	'en_gb': () => import("../translations/en.js"),
+	// $FlowFixMe[untyped-import]
 	'es': () => import("../translations/es.js"),
 	// $FlowFixMe[untyped-import]
 	'et': () => import("../translations/et.js"),
@@ -145,10 +145,76 @@ const translationImportMap = {
 	// $FlowFixMe[untyped-import]
 	'zh_hant': () => import("../translations/zh_hant.js"),
 }
-export const languageByCode: {[string]: Language} = languages.reduce((acc, curr) => {
-	acc[curr.code] = curr
-	return acc
-}, {})
+/**
+ * Language = {code, textId}
+ * "code" is the 2 letter abbr. of the language ("en", "ar")
+ * "textId" corresponds to a code ("languageEnglish_label", "languageArabic_label")
+ *
+ * lang.get(textId) will return the translated languages
+ * languageByCode[code] will return the whole language Object
+ * in all cases lang.get(languageByCode[code].textId) will always return the translated language from a code
+ */
+
+export const LanguageNames = Object.freeze({
+	ar: 'languageArabic_label',
+	bg: 'languageBulgarian_label',
+	ca: 'languageCatalan_label',
+	cs: 'languageCzech_label',
+	da: 'languageDanish_label',
+	de: 'languageGerman_label',
+	de_sie: 'languageGermanSie_label',
+	el: 'languageGreek_label',
+	en: 'languageEnglish_label',
+	en_gb: 'languageEnglishUk_label',
+	es: 'languageSpanish_label',
+	et: 'languageEstonian_label',
+	fa_ir: 'languagePersian_label',
+	fi: 'languageFinnish_label',
+	fr: 'languageFrench_label',
+	gl: 'languageGalician_label',
+	hi: 'languageHindi_label',
+	hr: 'languageCroatian_label',
+	hu: 'languageHungarian_label',
+	id: 'languageIndonesian_label',
+	it: 'languageItalian_label',
+	ja: 'languageJapanese_label',
+	lt: 'languageLithuanian_label',
+	lv: 'languageLatvian_label',
+	nl: 'languageDutch_label',
+	no: 'languageNorwegian_label',
+	pl: 'languagePolish_label',
+	pt_br: 'languagePortugeseBrazil_label',
+	pt_pt: 'languagePortugesePortugal_label',
+	ro: 'languageRomanian_label',
+	ru: 'languageRussian_label',
+	sk: 'languageSlovak_label',
+	sl: 'languageSlovenian_label',
+	sr: 'languageSerbian_label',
+	sv: 'languageSwedish_label',
+	tr: 'languageTurkish_label',
+	uk: 'languageUkrainian_label',
+	vi: 'languageVietnamese_label',
+	zh: 'languageChineseSimplified_label',
+	zh_tw: 'languageChineseTraditional_label',
+})
+export type LanguageCode = $Keys<typeof LanguageNames>
+
+export type Language = {code: LanguageCode, textId: TranslationKey}
+
+export const languageByCode: {[LanguageCode]: Language}= {}
+// cannot import typedEntries here for some reason
+for (let [code, textId] of downcast(Object.entries(LanguageNames))) {
+	languageByCode[code] = {code, textId}
+}
+
+
+export const languages: $ReadOnlyArray<{code: LanguageCode, textId: TranslationKey}> = downcast(Object.entries(LanguageNames)).map(([code, textId]) => {
+	return {code, textId}
+})
+
+
+
+
 
 const infoLinks = {
 	"homePage_link": "https://tutanota.com",
@@ -184,7 +250,7 @@ const infoLinks = {
 export class LanguageViewModel {
 	translations: Object;
 	fallback: Object;
-	code: string;
+	code: LanguageCode;
 	languageTag: string;
 	staticTranslations: Object;
 	formats: {
@@ -235,14 +301,14 @@ export class LanguageViewModel {
 		this.staticTranslations[key] = text
 	}
 
-	initWithTranslations(code: string, languageTag: string, fallBackTranslations: Object, translations: Object) {
+	initWithTranslations(code: LanguageCode, languageTag: string, fallBackTranslations: Object, translations: Object) {
 		this.translations = translations
 		this.fallback = fallBackTranslations
 		this.code = code
 	}
 
 
-	setLanguage(lang: {code: string, languageTag: string}): Promise<void> {
+	setLanguage(lang: {code: LanguageCode, languageTag: string}): Promise<void> {
 		this._setLanguageTag(lang.languageTag)
 		if (this.code === lang.code) {
 			return Promise.resolve()
@@ -414,7 +480,7 @@ export class LanguageViewModel {
  * Gets the default language derived from the browser language.
  * @param restrictions An array of language codes the selection should be restricted to
  */
-export function getLanguageNoDefault(restrictions: ?string[]): ?{code: string, languageTag: string} {
+export function getLanguageNoDefault(restrictions: ?LanguageCode[]): ?{code: LanguageCode, languageTag: string} {
 	// navigator.languages can be an empty array on android 5.x devices
 	let languageTags
 	if (typeof navigator !== 'undefined') {
@@ -440,7 +506,7 @@ export function getLanguageNoDefault(restrictions: ?string[]): ?{code: string, l
  * Gets the default language derived from the browser language.
  * @param restrictions An array of language codes the selection should be restricted to
  */
-export function getLanguage(restrictions: ?string[]): {code: string, languageTag: string} {
+export function getLanguage(restrictions: ?LanguageCode[]): {code: LanguageCode, languageTag: string} { // TODO: change from string to LanguageCode
 	const language = getLanguageNoDefault(restrictions)
 	if (language) return language
 
@@ -451,7 +517,7 @@ export function getLanguage(restrictions: ?string[]): {code: string, languageTag
 	}
 }
 
-export function _getSubstitutedLanguageCode(tag: string, restrictions: ?string[]): ?string {
+export function _getSubstitutedLanguageCode(tag: string, restrictions: ?LanguageCode[]): ?LanguageCode {
 	let code = tag.toLowerCase().replace("-", "_")
 	let language = languages.find(l => l.code === code && (restrictions == null
 		|| restrictions.indexOf(l.code) !== -1))
@@ -467,7 +533,7 @@ export function _getSubstitutedLanguageCode(tag: string, restrictions: ?string[]
 	if (language) {
 		if (language.code === 'de' && typeof whitelabelCustomizations === "object" && whitelabelCustomizations
 			&& whitelabelCustomizations.germanLanguageCode) {
-			return whitelabelCustomizations.germanLanguageCode
+			return downcast(whitelabelCustomizations.germanLanguageCode)
 		} else {
 			return language.code
 		}
