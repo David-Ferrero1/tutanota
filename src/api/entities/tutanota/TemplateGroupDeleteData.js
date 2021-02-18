@@ -1,6 +1,6 @@
 // @flow
 
-import {create, TypeRef} from "../../common/utils/EntityUtils"
+import {create} from "../../common/utils/EntityUtils"
 
 
 export const TemplateGroupDeleteDataTypeRef: TypeRef<TemplateGroupDeleteData> = new TypeRef("tutanota", "TemplateGroupDeleteData")

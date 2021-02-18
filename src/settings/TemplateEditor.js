@@ -1,7 +1,6 @@
 // @flow
 
 import m from "mithril"
-import {HtmlEditor} from "../gui/base/HtmlEditor"
 import stream from "mithril/stream/stream.js"
 import type {TextFieldAttrs} from "../gui/base/TextFieldN"
 import {TextFieldN} from "../gui/base/TextFieldN"
@@ -18,8 +17,9 @@ import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
 import {getLanguageCode, getLanguageName, TemplateEditorModel} from "./TemplateEditorModel"
 import {locator} from "../api/main/MainLocator"
 import type {TemplateGroupRoot} from "../api/entities/tutanota/TemplateGroupRoot"
-import {UserError} from "../api/common/error/UserError"
 import {showUserError} from "../misc/ErrorHandlerImpl"
+import {UserError} from "../api/main/UserError"
+import {HtmlEditor} from "../gui/editor/HtmlEditor"
 
 /**
  *	Creates an Editor Popup in which you can create a new template or edit an existing one

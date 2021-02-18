@@ -3,7 +3,6 @@
 import m from "mithril"
 import type {KnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEntry"
 import stream from "mithril/stream/stream.js"
-import {HtmlEditor} from "../gui/base/HtmlEditor"
 import type {TextFieldAttrs} from "../gui/base/TextFieldN"
 import {ButtonColors, ButtonN, ButtonType} from "../gui/base/ButtonN"
 import type {ButtonAttrs} from "../gui/base/ButtonN"
@@ -21,9 +20,10 @@ import {Icon} from "../gui/base/Icon"
 import {locator} from "../api/main/MainLocator"
 import type {TemplateGroupRoot} from "../api/entities/tutanota/TemplateGroupRoot"
 import {attachDropdown} from "../gui/base/DropdownN"
-import {UserError} from "../api/common/error/UserError"
 import {showUserError} from "../misc/ErrorHandlerImpl"
 import {elementIdPart, listIdPart} from "../api/common/utils/EntityUtils"
+import {HtmlEditor} from "../gui/editor/HtmlEditor"
+import {UserError} from "../api/main/UserError"
 
 /**
  *  Editor to edit / add a knowledgebase entry

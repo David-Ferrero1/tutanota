@@ -1,8 +1,9 @@
 // @flow
 
-import {create, TypeRef} from "../../common/utils/EntityUtils"
+import {create} from "../../common/utils/EntityUtils"
 
 import type {KnowledgeBaseEntryKeywords} from "./KnowledgeBaseEntryKeywords"
+import {TypeRef} from "../../common/utils/TypeRef"
 
 export const KnowledgeBaseEntryTypeRef: TypeRef<KnowledgeBaseEntry> = new TypeRef("tutanota", "KnowledgeBaseEntry")
 export const _TypeModel: TypeModel = {

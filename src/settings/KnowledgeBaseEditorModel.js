@@ -13,8 +13,8 @@ import {createKnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEn
 import {LazyLoaded} from "../api/common/utils/LazyLoaded"
 import type {TextFieldAttrs} from "../gui/base/TextFieldN"
 import stream from "mithril/stream/stream.js"
-import {UserError} from "../api/common/error/UserError"
 import {NotFoundError} from "../api/common/error/RestError"
+import {UserError} from "../api/main/UserError"
 
 /**
  *  Model, which includes the logic of the editor

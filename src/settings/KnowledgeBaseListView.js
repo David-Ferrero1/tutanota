@@ -11,11 +11,11 @@ import {List} from "../gui/base/List"
 import type {EntityUpdateData} from "../api/main/EventController"
 import {isUpdateForTypeRef} from "../api/main/EventController"
 import {size} from "../gui/size"
-import {assertMainOrNode} from "../api/Env"
 import type {TemplateGroupRoot} from "../api/entities/tutanota/TemplateGroupRoot"
 import {EntityClient} from "../api/common/EntityClient"
 import {showKnowledgeBaseEditor} from "./KnowledgeBaseEditor"
 import {isSameId} from "../api/common/utils/EntityUtils"
+import {assertMainOrNode} from "../api/common/Env"
 
 assertMainOrNode()
 
@@ -70,8 +70,8 @@ export class KnowledgeBaseListView implements UpdatableSettingsViewer {
 			swipe: {
 				renderLeftSpacer: () => [],
 				renderRightSpacer: () => [],
-				swipeLeft: (listElement) => Promise.resolve(),
-				swipeRight: (listElement) => Promise.resolve(),
+				swipeLeft: (listElement) => Promise.resolve(false),
+				swipeRight: (listElement) => Promise.resolve(false),
 				enabled: false
 			},
 			elementsDraggable: false,

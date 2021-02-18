@@ -26,8 +26,8 @@ import {locator} from "../api/main/MainLocator"
 import {TemplateGroupRootTypeRef} from "../api/entities/tutanota/TemplateGroupRoot"
 import {showTemplateEditor} from "../settings/TemplateEditor"
 import {TemplateSearchBar} from "./TemplateSearchBar"
-import {Editor} from "../gui/base/Editor"
 import {DomRectReadOnlyPolyfilled} from "../gui/base/Dropdown"
+import {Editor} from "../gui/editor/Editor"
 
 export const TEMPLATE_POPUP_HEIGHT = 340;
 export const TEMPLATE_POPUP_TWO_COLUMN_MIN_WIDTH = 600;

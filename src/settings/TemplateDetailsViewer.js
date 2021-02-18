@@ -2,7 +2,6 @@
 
 import m from "mithril"
 import stream from "mithril/stream/stream.js"
-import {HtmlEditor} from "../gui/base/HtmlEditor"
 import {neverNull} from "../api/common/utils/Utils"
 import type {TextFieldAttrs} from "../gui/base/TextFieldN"
 import {TextFieldN} from "../gui/base/TextFieldN"
@@ -18,6 +17,7 @@ import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
 import {locator} from "../api/main/MainLocator"
 import {EntityClient} from "../api/common/EntityClient"
 import {TemplateGroupRootTypeRef} from "../api/entities/tutanota/TemplateGroupRoot"
+import {HtmlEditor} from "../gui/editor/HtmlEditor"
 
 export class TemplateDetailsViewer {
 	view: Function

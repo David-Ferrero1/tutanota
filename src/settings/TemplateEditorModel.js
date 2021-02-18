@@ -9,10 +9,10 @@ import {clone, downcast} from "../api/common/utils/Utils"
 import type {TemplateGroupRoot} from "../api/entities/tutanota/TemplateGroupRoot"
 import {createEmailTemplate, EmailTemplateTypeRef} from "../api/entities/tutanota/EmailTemplate"
 import stream from "mithril/stream/stream.js"
-import {UserError} from "../api/common/error/UserError"
 import {contains, remove} from "../api/common/utils/ArrayUtils"
 import {getElementId, isSameId} from "../api/common/utils/EntityUtils"
 import type {EntityClient} from "../api/common/EntityClient"
+import {UserError} from "../api/main/UserError"
 
 
 export class TemplateEditorModel {

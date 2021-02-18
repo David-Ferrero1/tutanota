@@ -3,7 +3,7 @@ import {nativeApp} from "../common/NativeWrapper"
 import {Request} from "../../api/common/WorkerProtocol"
 import {uriToFileRef} from "../common/FileApp"
 import {isDesktop} from "../../api/common/Env"
-import type {LanguageCode} from "../misc/LanguageViewModel"
+import type {LanguageCode} from "../../misc/LanguageViewModel"
 
 /**
  * Open the link

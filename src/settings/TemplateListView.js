@@ -11,7 +11,7 @@ import {TemplateDetailsViewer} from "./TemplateDetailsViewer"
 import {showTemplateEditor} from "./TemplateEditor"
 import {createEmailTemplate, EmailTemplateTypeRef} from "../api/entities/tutanota/EmailTemplate"
 import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
-import {assertMainOrNode} from "../api/Env"
+import {assertMainOrNode} from "../api/common/Env"
 import {isUpdateForTypeRef} from "../api/main/EventController"
 import type {TemplateGroupRoot} from "../api/entities/tutanota/TemplateGroupRoot"
 import {EntityClient} from "../api/common/EntityClient"
@@ -73,8 +73,8 @@ export class TemplateListView implements UpdatableSettingsViewer {
 			swipe: {
 				renderLeftSpacer: () => [],
 				renderRightSpacer: () => [],
-				swipeLeft: (listElement) => Promise.resolve(),
-				swipeRight: (listElement) => Promise.resolve(),
+				swipeLeft: (listElement) => Promise.resolve(false),
+				swipeRight: (listElement) => Promise.resolve(false),
 				enabled: false
 			},
 			elementsDraggable: false,

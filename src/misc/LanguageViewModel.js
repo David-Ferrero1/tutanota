@@ -12,51 +12,51 @@ export type DateTimeFormatOptions = {
 	hourCycle?: string
 }
 
-// https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-export const languages: Language[] = [
-	{code: 'ar', textId: 'languageArabic_label'},
-	{code: 'bg', textId: 'languageBulgarian_label'},
-	{code: 'ca', textId: 'languageCatalan_label'},
-	{code: 'cs', textId: 'languageCzech_label'},
-	{code: 'da', textId: 'languageDanish_label'},
-	{code: 'de', textId: 'languageGerman_label'},
-	{code: 'de_sie', textId: 'languageGermanSie_label'},
-	{code: 'el', textId: 'languageGreek_label'},
-	{code: 'en', textId: 'languageEnglish_label'},
-	{code: 'en_gb', textId: 'languageEnglishUk_label'},
-	{code: 'es', textId: 'languageSpanish_label'},
-	{code: 'et', textId: 'languageEstonian_label'},
-	{code: 'fa_ir', textId: 'languagePersian_label'},
-	{code: 'fi', textId: 'languageFinnish_label'},
-	{code: 'fr', textId: 'languageFrench_label'},
-	{code: 'gl', textId: 'languageGalician_label'},
-	{code: 'he', textId: 'languageHebrew_label'},
-	{code: 'hi', textId: 'languageHindi_label'},
-	{code: 'hr', textId: 'languageCroatian_label'},
-	{code: 'hu', textId: 'languageHungarian_label'},
-	{code: 'id', textId: 'languageIndonesian_label'},
-	{code: 'it', textId: 'languageItalian_label'},
-	{code: 'ja', textId: 'languageJapanese_label'},
-	{code: 'ko', textId: 'languageKorean_label'},
-	{code: 'lt', textId: 'languageLithuanian_label'},
-	{code: 'lv', textId: 'languageLatvian_label'},
-	{code: 'nl', textId: 'languageDutch_label'},
-	{code: 'no', textId: 'languageNorwegian_label'},
-	{code: 'pl', textId: 'languagePolish_label'},
-	{code: 'pt_br', textId: 'languagePortugeseBrazil_label'},
-	{code: 'pt_pt', textId: 'languagePortugesePortugal_label'},
-	{code: 'ro', textId: 'languageRomanian_label'},
-	{code: 'ru', textId: 'languageRussian_label'},
-	{code: 'sk', textId: 'languageSlovak_label'},
-	{code: 'sl', textId: 'languageSlovenian_label'},
-	{code: 'sr', textId: 'languageSerbian_label'},
-	{code: 'sv', textId: 'languageSwedish_label'},
-	{code: 'tr', textId: 'languageTurkish_label'},
-	{code: 'uk', textId: 'languageUkrainian_label'},
-	{code: 'vi', textId: 'languageVietnamese_label'},
-	{code: 'zh', textId: 'languageChineseSimplified_label'},
-	{code: 'zh_hant', textId: 'languageChineseTraditional_label'}
-]
+// // https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+// export const languages: Language[] = [
+// 	{code: 'ar', textId: 'languageArabic_label'},
+// 	{code: 'bg', textId: 'languageBulgarian_label'},
+// 	{code: 'ca', textId: 'languageCatalan_label'},
+// 	{code: 'cs', textId: 'languageCzech_label'},
+// 	{code: 'da', textId: 'languageDanish_label'},
+// 	{code: 'de', textId: 'languageGerman_label'},
+// 	{code: 'de_sie', textId: 'languageGermanSie_label'},
+// 	{code: 'el', textId: 'languageGreek_label'},
+// 	{code: 'en', textId: 'languageEnglish_label'},
+// 	{code: 'en_gb', textId: 'languageEnglishUk_label'},
+// 	{code: 'es', textId: 'languageSpanish_label'},
+// 	{code: 'et', textId: 'languageEstonian_label'},
+// 	{code: 'fa_ir', textId: 'languagePersian_label'},
+// 	{code: 'fi', textId: 'languageFinnish_label'},
+// 	{code: 'fr', textId: 'languageFrench_label'},
+// 	{code: 'gl', textId: 'languageGalician_label'},
+// 	{code: 'he', textId: 'languageHebrew_label'},
+// 	{code: 'hi', textId: 'languageHindi_label'},
+// 	{code: 'hr', textId: 'languageCroatian_label'},
+// 	{code: 'hu', textId: 'languageHungarian_label'},
+// 	{code: 'id', textId: 'languageIndonesian_label'},
+// 	{code: 'it', textId: 'languageItalian_label'},
+// 	{code: 'ja', textId: 'languageJapanese_label'},
+// 	{code: 'ko', textId: 'languageKorean_label'},
+// 	{code: 'lt', textId: 'languageLithuanian_label'},
+// 	{code: 'lv', textId: 'languageLatvian_label'},
+// 	{code: 'nl', textId: 'languageDutch_label'},
+// 	{code: 'no', textId: 'languageNorwegian_label'},
+// 	{code: 'pl', textId: 'languagePolish_label'},
+// 	{code: 'pt_br', textId: 'languagePortugeseBrazil_label'},
+// 	{code: 'pt_pt', textId: 'languagePortugesePortugal_label'},
+// 	{code: 'ro', textId: 'languageRomanian_label'},
+// 	{code: 'ru', textId: 'languageRussian_label'},
+// 	{code: 'sk', textId: 'languageSlovak_label'},
+// 	{code: 'sl', textId: 'languageSlovenian_label'},
+// 	{code: 'sr', textId: 'languageSerbian_label'},
+// 	{code: 'sv', textId: 'languageSwedish_label'},
+// 	{code: 'tr', textId: 'languageTurkish_label'},
+// 	{code: 'uk', textId: 'languageUkrainian_label'},
+// 	{code: 'vi', textId: 'languageVietnamese_label'},
+// 	{code: 'zh', textId: 'languageChineseSimplified_label'},
+// 	{code: 'zh_hant', textId: 'languageChineseTraditional_label'}
+// ]
 
 // FIXME: make flow less angry
 const translationImportMap = {
@@ -317,7 +317,7 @@ export class LanguageViewModel {
 		// we don't support multiple language files for en so just use the one and only.
 		const code = lang.code.startsWith("en") ? "en" : lang.code
 
-		return translationImportMap[code]()
+		return translationImportMap[downcast(code)]()
 			.then(translationsModule => {
 				this.translations = translationsModule.default
 				this.code = lang.code
