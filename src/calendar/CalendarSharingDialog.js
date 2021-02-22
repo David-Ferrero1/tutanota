@@ -313,7 +313,7 @@ function showAddParticipantDialog(sharedGroupInfo: GroupInfo) {
 }
 
 function sendCalendarInvitation(sharedGroupInfo: GroupInfo, recipients: Array<RecipientInfo>, capability: ShareCapabilityEnum): Promise<Array<MailAddress>> {
-	return import("../../misc/SubscriptionDialogs")
+	return import("../misc/SubscriptionDialogs")
 		.then((SubscriptionDialogUtils) => SubscriptionDialogUtils.checkPremiumSubscription(false))
 		.then(ok => {
 			if (ok) {
@@ -338,7 +338,7 @@ function sendCalendarInvitation(sharedGroupInfo: GroupInfo, recipients: Array<Re
 						return Dialog.confirm("sharingFeatureNotOrderedAdmin_msg")
 						             .then(confirmed => {
 							             if (confirmed) {
-								             import("../../subscription/BuyDialog")
+								             import("../subscription/BuyDialog")
 									             .then((BuyDialog) => BuyDialog.showSharingBuyDialog(true))
 							             }
 						             }).return([])

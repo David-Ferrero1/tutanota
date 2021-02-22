@@ -67,7 +67,7 @@ export function showInvitationDialog(invitation: ReceivedGroupInvitation) {
 					label: "acceptInvitation_action",
 					type: ButtonType.Login,
 					click: () => {
-						import("../../misc/SubscriptionDialogs")
+						import("../misc/SubscriptionDialogs")
 							.then(SubscriptionDialogUtils => SubscriptionDialogUtils.checkPremiumSubscription(false))
 							.then(ok => {
 								if (ok) {
