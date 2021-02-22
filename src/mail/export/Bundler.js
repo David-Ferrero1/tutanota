@@ -44,12 +44,14 @@ export function makeMailBundle(mail: Mail, entityClient: EntityClient, worker: W
 	                                    .then(body => import("../../misc/HtmlSanitizer")
 		                                    .then(({htmlSanitizer}) => htmlSanitizer.sanitize(body, {usePlaceholderForInlineImages: false}).text))
 
-	const attachmentsPromise = Promise.mapSeries(mail.attachments,
-		fileId => entityClient.load(FileTypeRef, fileId).then(worker.downloadFileContent.bind(worker)))
+	const attachmentsPromise = Promise.all(
+		mail.attachments.map(fileId => entityClient.load(FileTypeRef, fileId)
+		                                           .then(worker.downloadFileContent.bind(worker))))
 
 	const headersPromise = mail.headers
 		? entityClient.load(MailHeadersTypeRef, mail.headers)
 		: Promise.resolve(null)
+
 	const recipientMapper = addr => ({address: addr.address, name: addr.name})
 	return Promise.all([bodyTextPromise, attachmentsPromise, headersPromise])
 	              .then(([bodyText, attachments, headers]) => {

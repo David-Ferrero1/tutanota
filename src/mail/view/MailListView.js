@@ -113,6 +113,7 @@ export class MailListView implements Component {
 					document.addEventListener("mouseup", () => resolve(false), {once: true})
 				})
 
+				// If a mail has already been bundled then we shouldn't download and bundle it again
 				fileApp.queryAvailableMsg(draggedMails)
 				       .then(notDownloaded => {
 					       const notDownloadedMails =
@@ -122,14 +123,13 @@ export class MailListView implements Component {
 					       // if there are we take those, otherwise we start downloading
 					       const download = notDownloadedMails.length > 0
 						       ? Promise.all(notDownloadedMails.map(mail => {
-							       const downloadProgressMonitorHandle = locator.progressTracker.registerMonitor(1);
 							       // If a mail was started downloading in the last drag, and we try to drag it again while it's not yet finished,
 							       // then we should grab the promise that has already been created for it, otherwise make a new one
 							       const id = mail._id.join()
 							       if (this.mailsBeingBundled.has(id)) {
 								       return neverNull(this.mailsBeingBundled.get(id))
 							       } else {
-								       const progressMonitor = makeTrackedProgressMonitor(locator.progressTracker, 1)
+								       const progressMonitor = makeTrackedProgressMonitor(locator.progressTracker, 2)
 								       const bundlePromise = bundleMail(mail)
 									       .then(bundle => {
 										       progressMonitor.workDone(1)
