@@ -1,7 +1,7 @@
 // @flow
 import m from "mithril"
-import type {KnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEntry"
-import {px} from "../gui/size"
+import type {KnowledgeBaseEntry} from "../../api/entities/tutanota/KnowledgeBaseEntry"
+import {px} from "../../gui/size"
 
 export type KnowledgebaseListEntryAttrs = {
 	entry: KnowledgeBaseEntry

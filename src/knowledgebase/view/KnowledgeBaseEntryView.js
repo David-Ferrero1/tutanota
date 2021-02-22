@@ -1,12 +1,12 @@
 // @flow
 
 import m from "mithril"
-import type {KnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEntry"
-import type {KnowledgeBaseEntryKeywords} from "../api/entities/tutanota/KnowledgeBaseEntryKeywords"
-import {lang} from "../misc/LanguageViewModel"
-import {memoized} from "../api/common/utils/Utils"
-import {htmlSanitizer} from "../misc/HtmlSanitizer"
-import {startsWith} from "../api/common/utils/StringUtils"
+import type {KnowledgeBaseEntry} from "../../api/entities/tutanota/KnowledgeBaseEntry"
+import type {KnowledgeBaseEntryKeywords} from "../../api/entities/tutanota/KnowledgeBaseEntryKeywords"
+import {lang} from "../../misc/LanguageViewModel"
+import {memoized} from "../../api/common/utils/Utils"
+import {htmlSanitizer} from "../../misc/HtmlSanitizer"
+import {startsWith} from "../../api/common/utils/StringUtils"
 
 type KnowledgeBaseEntryViewAttrs = {
 	entry: KnowledgeBaseEntry,

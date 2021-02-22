@@ -1,5 +1,5 @@
 //@flow
-import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
+import type {EmailTemplate} from "../../api/entities/tutanota/EmailTemplate"
 
 
 export function searchInTemplates(input: string, allTemplates: Array<EmailTemplate>): Array<EmailTemplate> {

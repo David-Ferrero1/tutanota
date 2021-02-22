@@ -1,6 +1,7 @@
 // @flow
 
 import {create} from "../../common/utils/EntityUtils"
+import {TypeRef} from "../../common/utils/TypeRef"
 
 import type {InternalGroupData} from "./InternalGroupData"
 

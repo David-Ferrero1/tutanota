@@ -1,11 +1,11 @@
 // @flow
 import m from "mithril"
 import {TEMPLATE_POPUP_HEIGHT} from "./TemplatePopup"
-import {px} from "../gui/size"
-import {Keys} from "../api/common/TutanotaConstants"
-import {TemplateModel} from "./TemplateModel"
-import {isKeyPressed} from "../misc/KeyManager"
-import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
+import {px} from "../../gui/size"
+import {Keys} from "../../api/common/TutanotaConstants"
+import {TemplateModel} from "../model/TemplateModel"
+import {isKeyPressed} from "../../misc/KeyManager"
+import type {EmailTemplate} from "../../api/entities/tutanota/EmailTemplate"
 
 /**
  * TemplateExpander is the right side that is rendered within the Popup. Consists of Dropdown, Content and Button.

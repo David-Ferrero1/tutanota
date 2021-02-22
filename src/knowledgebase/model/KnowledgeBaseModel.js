@@ -1,24 +1,22 @@
 //@flow
-import type {KnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEntry"
-import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
-import {EventController, isUpdateForTypeRef} from "../api/main/EventController"
-import type {EntityEventsListener, EntityUpdateData} from "../api/main/EventController"
-import {EntityClient} from "../api/common/EntityClient"
-import {KnowledgeBaseEntryTypeRef} from "../api/entities/tutanota/KnowledgeBaseEntry"
+import type {KnowledgeBaseEntry} from "../../api/entities/tutanota/KnowledgeBaseEntry"
+import type {EmailTemplate} from "../../api/entities/tutanota/EmailTemplate"
+import {EventController, isUpdateForTypeRef} from "../../api/main/EventController"
+import type {EntityEventsListener, EntityUpdateData} from "../../api/main/EventController"
+import {EntityClient} from "../../api/common/EntityClient"
+import {KnowledgeBaseEntryTypeRef} from "../../api/entities/tutanota/KnowledgeBaseEntry"
 import {knowledgeBaseSearch} from "./KnowledgeBaseSearchFilter"
-import type {LanguageCode} from "../misc/LanguageViewModel"
+import type {LanguageCode} from "../../misc/LanguageViewModel"
 import stream from "mithril/stream/stream.js"
-import {findAndRemove} from "../api/common/utils/ArrayUtils"
-import {OperationType} from "../api/common/TutanotaConstants"
-import {EmailTemplateTypeRef} from "../api/entities/tutanota/EmailTemplate"
-import {htmlSanitizer} from "../misc/HtmlSanitizer"
-import {lang} from "../misc/LanguageViewModel"
-import {downcast} from "../api/common/utils/Utils"
-import type {LoginController} from "../api/main/LoginController"
-import type {TemplateGroupRoot} from "../api/entities/tutanota/TemplateGroupRoot"
-import {TemplateGroupModel} from "../templates/TemplateGroupModel"
-import {getElementId, isSameId} from "../api/common/utils/EntityUtils"
-import {KNOWLEDGEBASE_PANEL_WIDTH} from "./KnowledgeBaseView"
+import {findAndRemove} from "../../api/common/utils/ArrayUtils"
+import {OperationType} from "../../api/common/TutanotaConstants"
+import {EmailTemplateTypeRef} from "../../api/entities/tutanota/EmailTemplate"
+import {lang} from "../../misc/LanguageViewModel"
+import {downcast} from "../../api/common/utils/Utils"
+import type {LoginController} from "../../api/main/LoginController"
+import type {TemplateGroupRoot} from "../../api/entities/tutanota/TemplateGroupRoot"
+import {TemplateGroupModel} from "../../templates/model/TemplateGroupModel"
+import {getElementId, isSameId} from "../../api/common/utils/EntityUtils"
 
 export const SELECT_NEXT_ENTRY = "next";
 export const SELECT_PREV_ENTRY = "previous";
@@ -91,10 +89,6 @@ export class KnowledgeBaseModel {
 		return this.selectedEntry() === entry
 	}
 
-	isScreenWideEnough(): boolean {
-		return window.innerWidth > (800 + KNOWLEDGEBASE_PANEL_WIDTH + 20)
-	}
-
 	containsResult(): boolean {
 		return this.filteredEntries().length > 0
 	}
@@ -126,11 +120,11 @@ export class KnowledgeBaseModel {
 		return downcast(template.contents[0].languageCode)
 	}
 
-	getContentFromTemplate(languageCode: LanguageCode, template: ?EmailTemplate): string { // returns the value of the content as string
-		const content = template && template.contents.find(c => c.languageCode === languageCode)
-		const text = content && content.text || ""
-		return htmlSanitizer.sanitize(text, true).text
-	}
+	// getContentFromTemplate(languageCode: LanguageCode, template: ?EmailTemplate): string { // returns the value of the content as string
+	// 	const content = template && template.contents.find(c => c.languageCode === languageCode)
+	// 	const text = content && content.text || ""
+	// 	return htmlSanitizer.sanitize(text, true).text
+	// }
 
 	sortEntriesByMatchingKeywords(emailContent: string) {
 		this._matchedKeywordsInContent = []

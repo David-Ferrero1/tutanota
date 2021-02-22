@@ -55,8 +55,8 @@ import {appendEmailSignature} from "../signature/Signature"
 import {isKeyPressed} from "../../misc/KeyManager"
 import {modal} from "../../gui/base/Modal"
 import type {ButtonAttrs} from "../../gui/base/ButtonN"
-import {KnowledgeBaseView} from "../../knowledgebase/KnowledgeBaseView"
-import {showTemplatePopupInEditor} from "../../templates/TemplatePopup"
+import {KnowledgeBaseView} from "../../knowledgebase/view/KnowledgeBaseView"
+import {showTemplatePopupInEditor} from "../../templates/view/TemplatePopup"
 
 export type MailEditorAttrs = {
 	model: SendMailModel,

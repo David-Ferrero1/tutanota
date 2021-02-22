@@ -14,9 +14,9 @@ import type {CalendarModel} from "../../calendar/model/CalendarModel"
 import {CalendarModelImpl} from "../../calendar/model/CalendarModel"
 import {defer} from "../common/utils/Utils"
 import {ProgressTracker} from "./ProgressTracker"
-import {TemplateModel} from "../../templates/TemplateModel"
-import {KnowledgeBaseModel} from "../../knowledgebase/KnowledgeBaseModel"
-import {TemplateGroupModel} from "../../templates/TemplateGroupModel"
+import {TemplateModel} from "../../templates/model/TemplateModel"
+import {KnowledgeBaseModel} from "../../knowledgebase/model/KnowledgeBaseModel"
+import {TemplateGroupModel} from "../../templates/model/TemplateGroupModel"
 
 assertMainOrNode()
 

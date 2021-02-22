@@ -1,33 +1,32 @@
 //@flow
 import m from "mithril"
-import type {ModalComponent} from "../gui/base/Modal"
-import {modal} from "../gui/base/Modal"
-import {px} from "../gui/size"
-import type {Shortcut} from "../misc/KeyManager"
-import {isKeyPressed} from "../misc/KeyManager"
-import type {PosRect} from "../gui/base/Dropdown"
-import type {TextFieldAttrs} from "../gui/base/TextFieldN"
+import type {ModalComponent} from "../../gui/base/Modal"
+import {modal} from "../../gui/base/Modal"
+import {px} from "../../gui/size"
+import type {Shortcut} from "../../misc/KeyManager"
+import {isKeyPressed} from "../../misc/KeyManager"
+import type {PosRect} from "../../gui/base/Dropdown"
+import type {TextFieldAttrs} from "../../gui/base/TextFieldN"
 import stream from "mithril/stream/stream.js"
-import {Keys} from "../api/common/TutanotaConstants"
+import {Keys} from "../../api/common/TutanotaConstants"
 import {TemplatePopupResultRow} from "./TemplatePopupResultRow"
-import {Icons} from "../gui/base/icons/Icons"
-import {Icon} from "../gui/base/Icon"
+import {Icons} from "../../gui/base/icons/Icons"
+import {Icon} from "../../gui/base/Icon"
 import {TemplateExpander} from "./TemplateExpander"
-import {lang, languageByCode} from "../misc/LanguageViewModel"
-import {Dialog} from "../gui/base/Dialog"
-import {windowFacade} from "../misc/WindowFacade"
-import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
-import type {ButtonAttrs} from "../gui/base/ButtonN"
-import {ButtonColors, ButtonN, ButtonType} from "../gui/base/ButtonN"
-import {SELECT_NEXT_TEMPLATE, SELECT_PREV_TEMPLATE, TemplateModel} from "./TemplateModel"
-import {attachDropdown} from "../gui/base/DropdownN"
-import {downcast, neverNull, noOp} from "../api/common/utils/Utils"
-import {locator} from "../api/main/MainLocator"
-import {TemplateGroupRootTypeRef} from "../api/entities/tutanota/TemplateGroupRoot"
-import {showTemplateEditor} from "../settings/TemplateEditor"
+import {lang, languageByCode} from "../../misc/LanguageViewModel"
+import {Dialog} from "../../gui/base/Dialog"
+import {windowFacade} from "../../misc/WindowFacade"
+import type {EmailTemplate} from "../../api/entities/tutanota/EmailTemplate"
+import type {ButtonAttrs} from "../../gui/base/ButtonN"
+import {ButtonColors, ButtonN, ButtonType} from "../../gui/base/ButtonN"
+import {SELECT_NEXT_TEMPLATE, SELECT_PREV_TEMPLATE, TemplateModel} from "../model/TemplateModel"
+import {attachDropdown} from "../../gui/base/DropdownN"
+import {downcast, neverNull, noOp} from "../../api/common/utils/Utils"
+import {locator} from "../../api/main/MainLocator"
+import {TemplateGroupRootTypeRef} from "../../api/entities/tutanota/TemplateGroupRoot"
 import {TemplateSearchBar} from "./TemplateSearchBar"
-import {DomRectReadOnlyPolyfilled} from "../gui/base/Dropdown"
-import {Editor} from "../gui/editor/Editor"
+import {DomRectReadOnlyPolyfilled} from "../../gui/base/Dropdown"
+import {Editor} from "../../gui/editor/Editor"
 
 export const TEMPLATE_POPUP_HEIGHT = 340;
 export const TEMPLATE_POPUP_TWO_COLUMN_MIN_WIDTH = 600;
@@ -136,7 +135,7 @@ export class TemplatePopup implements ModalComponent {
 
 	}
 
-	view(): Children {
+	view: () => Children = () => {
 		const showTwoColumns = this._isScreenWideEnough()
 
 		return m(".flex.flex-column.abs.elevated-bg.border-radius.dropdown-shadow", { // Main Wrapper
@@ -186,7 +185,7 @@ export class TemplatePopup implements ModalComponent {
 		])
 	}
 
-	_renderSearchBar(): Children {
+	_renderSearchBar: (() => Children) = () => {
 		return m(".flex", m(TemplateSearchBar, {
 			value: this._searchBarValue,
 			placeholder: "filter_label",
@@ -231,7 +230,9 @@ export class TemplatePopup implements ModalComponent {
 			return {
 				label: "createTemplate_action",
 				click: () => {
-					showTemplateEditor(null, templateGroupInstances[0].groupRoot)
+					import("../../settings/TemplateEditor").then(editor => {
+						editor.showTemplateEditor(null, templateGroupInstances[0].groupRoot)
+					})
 				},
 				type: ButtonType.ActionLarge,
 				icon: () => Icons.Add,
@@ -248,7 +249,9 @@ export class TemplatePopup implements ModalComponent {
 				return {
 					label: () => groupInstances.groupInfo.name,
 					click: () => {
-						showTemplateEditor(null, groupInstances.groupRoot)
+						import("../../settings/TemplateEditor").then(editor => {
+							editor.showTemplateEditor(null, groupInstances.groupRoot)
+						})
 					},
 					type: ButtonType.Dropdown,
 				}
@@ -283,7 +286,9 @@ export class TemplatePopup implements ModalComponent {
 				label: "editTemplate_action",
 				click: () => {
 					locator.entityClient.load(TemplateGroupRootTypeRef, neverNull(selectedTemplate._ownerGroup)).then(groupRoot => {
-						showTemplateEditor(selectedTemplate, groupRoot)
+						import("../../settings/TemplateEditor").then(editor => {
+							editor.showTemplateEditor(selectedTemplate, groupRoot)
+						})
 					})
 				},
 				type: ButtonType.ActionLarge,
@@ -320,13 +325,13 @@ export class TemplatePopup implements ModalComponent {
 		return [
 			m(".flex.flex-column",
 				this._templateModel.containsResult() ?
-					this._templateModel.getSearchResults()().map((template, index) => this._renderTemplateListRow(template, index))
+					this._templateModel.getSearchResults()().map((template, index) => this._renderTemplateListRow(template))
 					: m(".row-selected.text-center.pt", lang.get(this._templateModel.hasLoaded() ? "nothingFound_label" : "loadingTemplates_label"))
 			), // left end
 		]
 	}
 
-	_renderTemplateListRow(template: EmailTemplate, index: number): Children {
+	_renderTemplateListRow: (EmailTemplate) => Children = (template: EmailTemplate) => {
 		return m(".flex.flex-column.click", {
 				style: {
 					maxWidth: this._isScreenWideEnough() ? px(TEMPLATE_LIST_ENTRY_WIDTH) : px(this._rect.width - 20), // subtract 20px because of padding left and right

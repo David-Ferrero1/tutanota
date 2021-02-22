@@ -1,6 +1,6 @@
 // @flow
 
-import type {KnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEntry"
+import type {KnowledgeBaseEntry} from "../../api/entities/tutanota/KnowledgeBaseEntry"
 
 export function knowledgeBaseSearch(input: string, allEntries: Array<KnowledgeBaseEntry>): Array<KnowledgeBaseEntry> {
 	let matchedEntries = []

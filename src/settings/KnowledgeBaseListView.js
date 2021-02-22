@@ -1,7 +1,7 @@
 // @flow
 
 import m from "mithril"
-import {SettingsView} from "./SettingsView"
+import type {SettingsView} from "./SettingsView"
 import {KnowledgeBaseDetailsViewer} from "./KnowledgeBaseDetailsViewer"
 import type {KnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEntry"
 import {KnowledgeBaseEntryTypeRef} from "../api/entities/tutanota/KnowledgeBaseEntry"

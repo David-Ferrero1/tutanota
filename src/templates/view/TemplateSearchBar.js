@@ -1,11 +1,10 @@
 //@flow
 import m from "mithril"
-import type {TranslationKey} from "../misc/LanguageViewModel"
-import type {TextFieldTypeEnum} from "../gui/base/TextFieldN"
-import {inputLineHeight, px} from "../gui/size"
-import {lang} from "../misc/LanguageViewModel"
-import type {keyHandler} from "../misc/KeyManager"
-import {theme} from "../gui/theme"
+import type {TranslationKey} from "../../misc/LanguageViewModel"
+import {inputLineHeight, px} from "../../gui/size"
+import {lang} from "../../misc/LanguageViewModel"
+import type {keyHandler} from "../../misc/KeyManager"
+import {theme} from "../../gui/theme"
 
 export type TemplateSearchBarAttrs = {
 	value: Stream<string>,

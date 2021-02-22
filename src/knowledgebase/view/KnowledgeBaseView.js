@@ -1,31 +1,30 @@
 // @flow
 import m from "mithril"
-import {px} from "../gui/size"
-import {KnowledgeBaseModel} from "./KnowledgeBaseModel"
-import type {KnowledgeBaseEntry} from "../api/entities/tutanota/KnowledgeBaseEntry"
+import {px} from "../../gui/size"
+import {KnowledgeBaseModel} from "../model/KnowledgeBaseModel"
+import type {KnowledgeBaseEntry} from "../../api/entities/tutanota/KnowledgeBaseEntry"
 import {KNOWLEDGEBASE_LIST_ENTRY_HEIGHT, KnowledgeBaseListEntry} from "./KnowledgeBaseListEntry"
-import {lang} from "../misc/LanguageViewModel"
-import type {ButtonAttrs} from "../gui/base/ButtonN"
-import {ButtonType} from "../gui/base/ButtonN"
+import {lang} from "../../misc/LanguageViewModel"
+import type {ButtonAttrs} from "../../gui/base/ButtonN"
+import {ButtonType} from "../../gui/base/ButtonN"
 import stream from "mithril/stream/stream.js"
 import {KnowledgeBaseEntryView} from "./KnowledgeBaseEntryView"
-import {locator} from "../api/main/MainLocator"
-import {lastThrow} from "../api/common/utils/ArrayUtils"
-import type {EmailTemplate} from "../api/entities/tutanota/EmailTemplate"
-import {neverNull, noOp} from "../api/common/utils/Utils"
-import {DialogHeaderBar} from "../gui/base/DialogHeaderBar"
-import {TemplateGroupRootTypeRef} from "../api/entities/tutanota/TemplateGroupRoot"
-import {showKnowledgeBaseEditor} from "../settings/KnowledgeBaseEditor"
-import {attachDropdown} from "../gui/base/DropdownN"
-import {NotFoundError} from "../api/common/error/RestError"
-import {Dialog} from "../gui/base/Dialog"
-import {TemplateSearchBar} from "../templates/TemplateSearchBar"
-import {isKeyPressed} from "../misc/KeyManager"
-import {Keys} from "../api/common/TutanotaConstants"
-import {SELECT_NEXT_TEMPLATE, SELECT_PREV_TEMPLATE} from "../templates/TemplateModel"
-import {Icon} from "../gui/base/Icon"
-import {Icons} from "../gui/base/icons/Icons"
-import {windowFacade} from "../misc/WindowFacade"
+import {locator} from "../../api/main/MainLocator"
+import {lastThrow} from "../../api/common/utils/ArrayUtils"
+import type {EmailTemplate} from "../../api/entities/tutanota/EmailTemplate"
+import {neverNull, noOp} from "../../api/common/utils/Utils"
+import {DialogHeaderBar} from "../../gui/base/DialogHeaderBar"
+import {TemplateGroupRootTypeRef} from "../../api/entities/tutanota/TemplateGroupRoot"
+import {attachDropdown} from "../../gui/base/DropdownN"
+import {NotFoundError} from "../../api/common/error/RestError"
+import {Dialog} from "../../gui/base/Dialog"
+import {TemplateSearchBar} from "../../templates/view/TemplateSearchBar"
+import {isKeyPressed} from "../../misc/KeyManager"
+import {Keys} from "../../api/common/TutanotaConstants"
+import {SELECT_NEXT_TEMPLATE, SELECT_PREV_TEMPLATE} from "../../templates/model/TemplateModel"
+import {Icon} from "../../gui/base/Icon"
+import {Icons} from "../../gui/base/icons/Icons"
+import {windowFacade} from "../../misc/WindowFacade"
 
 type KnowledgebaseViewAttrs = {
 	onTemplateSelect: (EmailTemplate) => void,
@@ -136,7 +135,9 @@ export class KnowledgeBaseView implements MComponent<KnowledgebaseViewAttrs> {
 					label: "editEntry_label",
 					click: () => {
 						locator.entityClient.load(TemplateGroupRootTypeRef, neverNull(entry._ownerGroup)).then(groupRoot => {
-							showKnowledgeBaseEditor(entry, groupRoot)
+							import("../../settings/KnowledgeBaseEditor").then(editor => {
+								editor.showKnowledgeBaseEditor(entry, groupRoot)
+							})
 						})
 					},
 					type: ButtonType.Primary,
@@ -230,7 +231,9 @@ export class KnowledgeBaseView implements MComponent<KnowledgebaseViewAttrs> {
 			return {
 				label: "addEntry_label",
 				click: () => {
-					showKnowledgeBaseEditor(null, templateGroupInstances[0].groupRoot)
+					import("../../settings/KnowledgeBaseEditor").then(editor => {
+						editor.showKnowledgeBaseEditor(null, templateGroupInstances[0].groupRoot)
+					})
 				},
 				type: ButtonType.Primary,
 			}
@@ -243,7 +246,9 @@ export class KnowledgeBaseView implements MComponent<KnowledgebaseViewAttrs> {
 				return {
 					label: () => groupInstances.groupInfo.name,
 					click: () => {
-						showKnowledgeBaseEditor(null, groupInstances.groupRoot)
+						import("../../settings/KnowledgeBaseEditor").then(editor => {
+							editor.showKnowledgeBaseEditor(null, groupInstances.groupRoot)
+						})
 					},
 					type: ButtonType.Dropdown,
 				}
