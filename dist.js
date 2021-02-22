@@ -128,20 +128,47 @@ async function buildWebapp(version) {
 	const polyfillBundle = await rollup({
 		input: ["src/polyfill.js"],
 		plugins: [
+			babel({
+				plugins: [
+					// Using Flow plugin and not preset to run before class-properties and avoid generating strange property code
+					"@babel/plugin-transform-flow-strip-types",
+					"@babel/plugin-proposal-class-properties",
+					"@babel/plugin-syntax-dynamic-import",
+					"@babel/plugin-transform-arrow-functions",
+					"@babel/plugin-transform-classes",
+					"@babel/plugin-transform-computed-properties",
+					"@babel/plugin-transform-destructuring",
+					"@babel/plugin-transform-for-of",
+					"@babel/plugin-transform-parameters",
+					"@babel/plugin-transform-shorthand-properties",
+					"@babel/plugin-transform-spread",
+					"@babel/plugin-transform-template-literals",
+					"@babel/plugin-transform-block-scoping",
+				],
+				babelHelpers: "bundled",
+			}),
 			MINIFY && terser(),
-			nodeResolve(),
-			commonjs(),
+			// append-libs must be before nodeResolve so that we can resolve bluebird correctly.
+			// nodeResolve is only for core-js.
 			{
 				name: "append-libs",
-				async footer() {
-					const systemjs = await fs.readFile("libs/s.js")
-					const bluebird = await fs.readFile("libs/bluebird.js")
-					return systemjs + "\n" + bluebird
-				}
-			}
+				resolveId(id) {
+					if (id === "systemjs") {
+						return path.resolve("libs/s.js")
+					} else if (id === "bluebird") {
+						return path.resolve("libs/bluebird.js")
+					}
+				},
+			},
+			nodeResolve(),
+			commonjs(),
 		],
 	})
-	await polyfillBundle.write({sourcemap: false, format: "iife", file: "build/dist/polyfill.js"})
+	await polyfillBundle.write({
+		sourcemap: false,
+		format: "iife",
+		file: "build/dist/polyfill.js"
+	})
 
 	console.log("started copying images", measure())
 	await fs.copy(path.join(__dirname, '/resources/images'), path.join(__dirname, '/build/dist/images'))
@@ -169,6 +196,7 @@ async function buildWebapp(version) {
 					"@babel/plugin-transform-shorthand-properties",
 					"@babel/plugin-transform-spread",
 					"@babel/plugin-transform-template-literals",
+					"@babel/plugin-transform-block-scoping"
 				],
 				babelHelpers: "bundled",
 			}),
