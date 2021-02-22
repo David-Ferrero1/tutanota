@@ -293,6 +293,10 @@ export class IPC {
 					              })
 				              })
 			}
+			case 'focusApplicationWindow': {
+				this._wm.get(windowId)?.browserWindow.focus()
+				return Promise.resolve()
+			}
 			default:
 				return Promise.reject(new Error(`Invalid Method invocation: ${method}`))
 		}

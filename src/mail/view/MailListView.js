@@ -31,6 +31,9 @@ import {uniqueInsert} from "../../api/common/utils/ArrayUtils"
 import {fileApp} from "../../native/common/FileApp"
 import {makeTrackedProgressMonitor, NoopProgressMonitor, ProgressMonitor} from "../../api/common/utils/ProgressMonitor"
 import {canDoDragAndDropExport} from "./MailViewer"
+import {nativeApp} from "../../native/common/NativeWrapper"
+import {Request} from "../../api/common/WorkerProtocol"
+import {show as showNotificationOverlay} from "../../gui/base/NotificationOverlay"
 
 assertMainOrNode()
 
@@ -100,7 +103,7 @@ export class MailListView implements Component {
 
 				// We have to preventDefault or we get mysterious and inconsistent electron crashes at the call to startDrag in IPC
 				event.preventDefault()
-				assertNotNull(document.body).style.cursor = "grabbing"
+				assertNotNull(document.body).style.cursor = "progress"
 
 				// If zero or one items are selected, then we should choose the one being dragged.
 				// if multiple items are selected, then we include them + the one being dragged, if it's not already included
@@ -113,6 +116,11 @@ export class MailListView implements Component {
 				const mouseupPromise = new Promise(resolve => {
 					document.addEventListener("mouseup", resolve, {once: true})
 				})
+
+				// show a message if it looks like it'll take a while for all of the contents to be downloaded
+				const notificationTimeout = setTimeout(() => showNotificationOverlay({
+					view: () => m("", "First we need to download everything...")
+				}, {label: "ok_action"}, []), 1000)
 
 				fileApp.queryAvailableMsg(draggedMails)
 				       .then(notDownloaded => {
@@ -128,14 +136,14 @@ export class MailListView implements Component {
 					       // otherwise we have to give some kind of feedback to the user that the drop was unsuccessful
 					       Promise.race([downloadPromise.then(() => true), mouseupPromise.then(() => false)])
 					              .then(didComplete => {
+						              window.clearTimeout(notificationTimeout)
 						              if (didComplete) {
-							              // Do the drag unimpeded
 							              fileApp.dragExportedMails(draggedMails.map(getLetId))
 						              } else {
-							              // Show progress in the UI
-							              assertNotNull(document.body).style.cursor = "progress"
-							              downloadPromise.then(() => {assertNotNull(document.body).style.cursor = "default"})
+							              nativeApp.invokeNative(new Request("focusApplicationWindow", []))
+							                       .then(() => Dialog.error(() => "The drag and drop was unsuccessful because the data was not finished downloading. You may try again."))
 						              }
+						              neverNull(document.body).style.cursor = "default"
 					              })
 				       })
 				return true

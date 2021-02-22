@@ -211,6 +211,7 @@ type NativeRequestType = 'init'
 	| 'queryAvailableMsgs'
 	| 'dragExportedMails'
 	| 'saveBundleAsMsg'
+	| "focusApplicationWindow"
 
 type JsRequestType = 'createMailEditor'
 	| 'handleBackPress'
